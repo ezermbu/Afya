@@ -15,18 +15,36 @@ class DoctorAuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        try {
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-        if (Auth::guard('doctor')->attempt($credentials)) {
+            $doctor = Doctor::where('email', $credentials['email'])->first();
+
+            if (!$doctor || $credentials['password'] !== $doctor->password) {
+                throw ValidationException::withMessages([
+                    'email' => ['Les informations d\'identification fournies sont incorrectes.'],
+                ]);
+            }
+
+            $request->session()->put('doctor_id', $doctor_id->id);
             return redirect()->intended('doctor/dashboard');
+        } catch (ValidationException $e) {
+            return redirect('doctor/login')->withErrors($e->errors());
+        } catch (\Exception $e) {
+            return redirect('doctor/login')->withErrors(['error' => 'Une erreur s\'est produite. Veuillez réessayer.']);
         }
-
-        return redirect('doctor/login')->withErrors(['email' => 'Invalid credentials']);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::guard('doctor')->logout();
-        return redirect('doctor/login');
+        try {
+            Auth::guard('doctor')->logout();
+            return redirect('doctor/login');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite lors de la déconnexion. Veuillez réessayer.']);
+        }
     }
 }

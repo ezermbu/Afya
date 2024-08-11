@@ -1,3 +1,10 @@
+@php
+    if (!session()->has('admin_id')) {
+        return redirect()->route('admin.login');
+    }
+    
+@endphp
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,14 +16,12 @@
 <body>
     <div class="container">
         <header>
-            <h1>Bienvenue sur le Tableau de Bord Admin</h1>
+
+            <h1>Bienvenue sur le Tableau de Bord Admin, {{ $admin->name }}</h1>
             <nav>
                 <ul>
                     <li><a href="{{ url('admin/dashboard') }}">Accueil</a></li>
                     <li><a href="{{ url('admin/hospitals') }}">Gérer les Hôpitaux</a></li>
-                    <li><a href="{{ url('admin/doctors') }}">Gérer les Médecins</a></li>
-                    <li><a href="{{ url('admin/patients') }}">Gérer les Patients</a></li>
-                    <li><a href="{{ url('admin/appointments') }}">Gérer les Rendez-vous</a></li>
                     <li><a href="{{ url('admin/users') }}">Gérer les Utilisateurs</a></li>
                 </ul>
             </nav>
@@ -49,8 +54,6 @@
                 <h2>Actions rapides</h2>
                 <div class="quick-actions">
                     <a href="{{ url('admin/hospitals/create') }}" class="btn">Ajouter un hôpital</a>
-                    <a href="{{ url('admin/doctors/create') }}" class="btn">Ajouter un médecin</a>
-                    <a href="{{ url('admin/appointments/create') }}" class="btn">Créer un rendez-vous</a>
                 </div>
             </section>
         </main>

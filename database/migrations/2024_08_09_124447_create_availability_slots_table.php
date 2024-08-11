@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('availability_slots', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('doctor_id');
-            $table->timestamp('start_time');
-            $table->timestamp('end_time');
+            $table->timestamp('start_time')->useCurrent();
+            $table->timestamp('end_time')->useCurrent();
             $table->timestamps();
-
+        
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
         });
     }

@@ -1,0 +1,23 @@
+.info-card {
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.info-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #00588a;
+}
+
+.info-card p {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.info-card p strong {
+    color: #414141;
+}
+

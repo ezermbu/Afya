@@ -9,6 +9,40 @@ use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
 {
+
+    public function dashboard() {
+        if (!session()->has('doctor_id')) {
+            return redirect()->intended(route('doctor.login'))->with('error', 'Veuillez vous connecter en tant que médecin.');
+        }
+    
+        $doctor = Doctor::find(session('doctor_id'));
+        $hospitalId = $doctor->hospital_id;
+    
+        $patientCount = Patient::where('hospital_id', $hospitalId)->count();
+        $consultationCount = Appointment::where('doctor_id', $doctor->id)->count();
+        $reportCount = Report::where('doctor_id', $doctor->id)->count();
+        $referenceCount = Reference::where('doctor_id', $doctor->id)->count();
+    
+        $recentConsultations = Appointment::where('doctor_id', $doctor->id)
+            ->with('patient')
+            ->orderBy('scheduled_at', 'desc')
+            ->take(5)
+            ->get();
+    
+        $announcements = Announcement::orderBy('created_at', 'desc')->take(3)->get();
+    
+        return view('doctor.dashboard', compact(
+            'doctor',
+            'patientCount',
+            'consultationCount',
+            'reportCount',
+            'referenceCount',
+            'recentConsultations',
+            'announcements'
+        ));
+    }
+    
+
     public function create()
     {
         return view('hospital.add_doctor');

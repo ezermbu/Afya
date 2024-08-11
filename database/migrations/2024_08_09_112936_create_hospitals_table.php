@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->default('12345');
             $table->timestamps();
         });
     }

@@ -4,12 +4,16 @@
     <title>Add Hospital</title>
 </head>
 <body>
-    <form method="POST" action="{{ url('admin/hospitals') }}">
+    <form method="POST" action="{{ route('admin.hospitals.store') }}">
         @csrf
-        <label>Name:</label>
+        <label>Nom:</label>
         <input type="text" name="name" required>
-        <label>Address:</label>
+        <label>Adresse:</label>
         <input type="text" name="address" required>
+        <label>Numéro:</label>
+        <input type="text" name="number" required>
+        <label>Email:</label>
+        <input type="email" name="email" required>
         <button type="submit">Add Hospital</button>
     </form>
 </body>

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Hospital;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class HospitalAuthController extends Controller
 {
@@ -15,19 +16,36 @@ class HospitalAuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        try {
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-        if (Auth::guard('hospital')->attempt($credentials)) {
+            $hospital = Hospital::where('email', $credentials['email'])->first();
+
+            if (!$hospital || $credentials['password'] !== $hospital->password) {
+                throw ValidationException::withMessages([
+                    'email' => ['Les informations d\'identification fournies sont incorrectes.'],
+                ]);
+            }
+
+            $request->session()->put('hospital_id', $hospital->id);
             return redirect()->intended('hospital/dashboard');
+        } catch (ValidationException $e) {
+            return redirect('hospital/login')->withErrors($e->errors());
+        } catch (\Exception $e) {
+            return redirect('hospital/login')->withErrors(['error' => 'Une erreur s\'est produite. Veuillez réessayer.']);
         }
-
-        return redirect('hospital/login')->withErrors(['email' => 'Invalid credentials']);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::guard('hospital')->logout();
-        return redirect('hospital/login');
+        try {
+            $request->session()->forget('hospital_id');
+            return redirect('hospital/login');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite lors de la déconnexion. Veuillez réessayer.']);
+        }
     }
 }
-

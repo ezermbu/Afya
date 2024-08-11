@@ -1,0 +1,138 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('Montserrat-Regular.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #005082;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.header .logo {
+    display: flex;
+    align-items: center;
+}
+
+.header .logo i {
+    font-size: 2rem;
+    margin-right: 10px;
+}
+
+.header .profile {
+    display: flex;
+    align-items: center;
+}
+
+.header .profile i {
+    font-size: 2rem;
+    margin-left: 10px;
+}
+
+.main {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.main h1 {
+    color: #287EB8;
+    font-size: 18px;
+}
+
+.main h2 {
+    color: #333;
+    font-size: 15px;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search input {
+    padding: 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    src: url('Montserrat-Regular.ttf') format('truetype');
+}
+
+.search button {
+    padding: 10px;
+    width: 60px;
+    background-color: #287EB8;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    color: white;
+    font-family: 'Montserrat';
+    src: url('Montserrat-Regular.ttf') format('truetype');
+}
+
+.hospital-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.hospital-card {
+    background-color: white;
+    border: 1px solid #287EB8;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hospital-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.hospital-card span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #287EB8;
+}
+
+.hospital-card button {
+    padding: 10px 20px;
+    background-color: #287EB8;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: auto; 
+    font-family: 'Montserrat';
+    src: url('Montserrat-Regular.ttf') format('truetype');
+}
+
+.hospital-card button:hover {
+    background-color: #0b507e;
+    transition: 0.3s ease-in-out;
+}

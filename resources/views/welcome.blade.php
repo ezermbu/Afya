@@ -6,7 +6,7 @@
 <body>
     <h1>Welcome to Afya Platform</h1>
     <p>Discover our medical services and features.</p>
-    <a href="{{ url('patient/register') }}">Sign Up</a>
-    <a href="{{ url('patient/login') }}">Login</a>
+    <a href="{{ route('patient.register') }}">Sign Up</a>
+    <a href="{{ route('patient.login') }}">Login</a>
 </body>
 </html>
