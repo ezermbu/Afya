@@ -4,56 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Hospital</title>
+    <title>Profil Patient - Admin</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="stylesheet" href="{{ asset('css/dashboard_admin.css') }}">
-    <style>
-        .add-hospital-form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            max-width: 500px;
-            margin: 20px auto;
-        }
-        .add-hospital-form h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .submit-btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        .submit-btn:hover {
-            background-color: #45a049;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -71,11 +26,11 @@
                     <span class="material-icons-sharp">monitor_heart</span>
                     <h3>Tableau de Bord</h3>
                 </a>
-                <a href="{{ route('admin.patients.index') }}">
+                <a href="{{ route('admin.patients.index') }}" class="active">
                     <span class="material-symbols-outlined">folder_shared</span>
                     <h3>Patients</h3>
                 </a>
-                <a href="{{ route('admin.hospitals.index') }}" class="active">
+                <a href="{{ route('admin.hospitals.index') }}">
                     <span class="material-symbols-outlined">emergency</span>
                     <h3>Hôpital</h3>
                 </a>
@@ -93,43 +48,52 @@
                 </a>
             </div>
         </aside>
-
+        
         <main>
-            <h1>Add Hospital</h1>
-            <div class="add-hospital-form">
-                <h2>Ajouter un nouvel hôpital</h2>
-                <form method="POST" action="{{ route('admin.hospitals.store') }}">
-                    @csrf
-                    <div class="form-group">
-                        <label for="name">Nom:</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Adresse:</label>
-                        <input type="text" id="address" name="address" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="number">Numéro:</label>
-                        <input type="text" id="number" name="number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <button type="submit" class="submit-btn">Ajouter l'hôpital</button>
-                </form>
+            <h1>Profil du Patient</h1>
+            <div class="date">
+                <input type="date">
+            </div>
+            <div class="patient-profile">
+                <div class="patient-info">
+                    <h2>{{ $patient->name }}</h2>
+                    <p>ID: {{ $patient->id }}</p>
+                    <p>Email: {{ $patient->email }}</p>
+                    <p>Date de naissance: {{ $patient->date_of_birth }}</p>
+                    <p>Téléphone: {{ $patient->phone }}</p>
+                    <p>Adresse: {{ $patient->address }}</p>
+                </div>
+                <div class="patient-photo">
+                    @if($patient->profile_photo)
+                        <img src="{{ asset('storage/' . $patient->profile_photo) }}" alt="Photo de {{ $patient->name }}">
+                    @else
+                        <div class="default-avatar">
+                            <span class="material-icons-sharp">account_circle</span>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <div class="patient-medical-info">
+                <h3>Informations Médicales</h3>
+                <p>Groupe sanguin: {{ $patient->blood_group }}</p>
+                <p>Allergies: {{ $patient->allergies ?? 'Aucune' }}</p>
+                <p>Maladies chroniques: {{ $patient->chronic_diseases ?? 'Aucune' }}</p>
+            </div>
+            <div class="patient-appointments">
+                <h3>Rendez-vous</h3>
+                
             </div>
         </main>
-
+        
         <div class="right">
             <div class="profile">
                 <div class="info">
-                    <h2>{{ $admin->name ?? 'Admin' }}</h2>
+                    <h2>{{ $admin->name }}</h2>
                     <p>{{ $admin->name ?? 'Admin' }}</p>
                     <small class="text-muted">{{ $admin->description ?? 'Administrateur du système de santé en ligne' }}</small>
-                </div>
+               </div>
                 <div class="profile-photo">
-                    @if(isset($admin->profile_photo))
+                    @if($admin->profile_photo)
                         <img src="{{ asset('storage/' . $admin->profile_photo) }}" alt="Photo de profil de {{ $admin->name }}" class="rounded-circle">
                     @else
                         <div class="default-avatar">

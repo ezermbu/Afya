@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use App\Models\Hospital;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Admin;
 
 class DoctorController extends Controller
 {
@@ -105,11 +106,11 @@ class DoctorController extends Controller
         return redirect('hospital/doctors');
     }
 
-    public function index()
+    public function indexAdmin()
     {
-        $hospitalId = Auth::guard('hospital')->user()->id;
-        $doctors = Doctor::where('hospital_id', $hospitalId)->get();
-        return view('hospital.doctors', compact('doctors'));
+        $doctors = Doctor::all();
+        $admin = Admin::find(session('admin_id'));
+        return view('admin.doctors', compact('doctors', 'admin'));
     }
 }
 

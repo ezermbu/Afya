@@ -17,10 +17,11 @@ class DatabaseSeeder extends Seeder
             DoctorSeeder::class,
             PatientSeeder::class,
             HospitalPatientSeeder::class,
+            ReportSeeder::class,
             /*AppointmentSeeder::class,
-            VitalSignSeeder::class,
+            VitalSignSeeder::class,*/
             AvailabilitySlotSeeder::class,
-            SubscriptionSeeder::class,
+            /*SubscriptionSeeder::class,
             PatientReportSeeder::class,
             DoctorReportSeeder::class,
             TeleconsultationSeeder::class*/

@@ -56,3 +56,39 @@ Orders.forEach(Orders =>{
     tr.innerHTML = trContent;
     document.querySelector('table tbody').appendChild(tr);
 })
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue } from "firebase/database";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyB5197U0FLAC416YMoZcqDqSWIfmDv6yQg",
+  authDomain: "afya-medical.firebaseapp.com",
+  databaseURL: "https://afya-medical-default-rtdb.firebaseio.com",
+  projectId: "afya-medical",
+  storageBucket: "afya-medical.appspot.com",
+  messagingSenderId: "787583211591",
+  appId: "1:787583211591:web:81c89e7f78a1097e2a3962",
+  measurementId: "G-45FF12QM9F"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// Reference to your data in Firebase
+const dataRef = ref(database, 'path/to/your/data');
+
+// Listen for changes in the data
+onValue(dataRef, (snapshot) => {
+  const data = snapshot.val();
+
+  // Update your HTML elements with the retrieved data
+  document.getElementById('rythmec').textContent = data.Rythme_Cardiaque     + " Bpm";
+  document.getElementById('tempc').textContent = data.Temperature_corporelle + " C";
+  document.getElementById('freqr').textContent = data.Frequence_respiratoire + " Cpm";
+  document.getElementById('pressionp').textContent = data.pressionp + " Pa";
+  document.getElementById('satuo').textContent = data.satuo + " Spo";
+  document.getElementById('tempa').textContent = data.Temperature_ambiante + " C";
+});

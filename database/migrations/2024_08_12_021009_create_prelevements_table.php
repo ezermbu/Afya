@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('prelevements', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('doctor_id');
             $table->unsignedBigInteger('patient_id');
-            $table->string('title');
-            $table->text('diagnosis');
-            $table->date('date');
+            $table->integer('rythme_cardiaque');
+            $table->decimal('temperature', 5, 2);
+            $table->integer('frequence_respiratoire');
+            $table->decimal('temperature_ambiante', 5, 2);
+            $table->string('pression_arterielle');
+            $table->decimal('saturation_oxygene', 5, 2);
+            $table->string('statut')->default('non vérifié');
             $table->timestamps();
 
-            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('prelevements');
     }
 };

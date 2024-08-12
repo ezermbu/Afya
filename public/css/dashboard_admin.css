@@ -1,0 +1,327 @@
+/* Base de variables */
+@font-face {
+    font-family: "Montserrat";
+    src: url("Montserrat-Regular.ttf") format("truetype");
+}
+
+:root {
+    --color-primary : #03476e;
+    --color-danger : #ff7782;
+    --color-logo : #03476e;
+    --color-success : #21a803;
+    --color-warning : #ffbb55;
+    --color-white : #fff;
+    --color-info-dark : #7d8da1;
+    --color-info-light : #dce1eb;
+    --color-dark : #363949;
+    --color-light : rgba(132, 139, 200, 0.18);
+    --color-primary-variant : #111e88;
+    --color-dark-variant : #677483;
+    --color-background : #f6f6f9;
+    --card-border-radius : 2rem;
+    --border-radius-1 : 0.4rem;
+    --border-radius-2 : 0.8rem;
+    --border-radius-3 : 1.2rem;
+
+    --card-padding : 1.8rem;
+    --padding-1 : 1.2rem;
+
+    --box-shadow : 0 2rem 3rem var(--color-light);
+}
+
+/* Thème sombre */
+.dark-theme-variables{
+    --color-background: #181a1e;
+    --color-white: #202528;
+    --color-dark: #edeffd;
+    --color-light: rgba(0, 0, 0, 0.4);
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: none;
+    border: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.88rem;
+    background: var(--color-background);
+    user-select: none;
+    overflow-x: hidden;
+    color: var(--color-dark);
+}
+
+.container {
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas: 
+        "aside main right";
+    min-height: 100vh;
+}
+
+aside {
+    grid-area: aside;
+    background: var(--color-white);
+    border-radius: var(--border-radius-1);
+    box-shadow: var(--box-shadow);
+    padding: 1.8rem;
+    position: relative;
+}
+
+aside .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-info-light);
+}
+
+aside .top .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+aside .top .logo img {
+    width: 2.8rem;
+    height: 2.8rem;
+}
+
+aside .top .logo h2 {
+    font-weight: 700;
+}
+
+aside .top .logo span {
+    color: var(--color-danger);
+}
+
+aside .top .close {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+aside .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+aside .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    border-radius: var(--border-radius-2);
+    text-decoration: none;
+    color: var(--color-dark);
+    background: var(--color-white);
+    transition: background 0.3s;
+}
+
+aside .sidebar a.active {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+aside .sidebar a span {
+    font-size: 1.6rem;
+}
+
+aside .sidebar a h3 {
+    font-size: 1rem;
+}
+
+main {
+    grid-area: main;
+    background: var(--color-white);
+    border-radius: var(--border-radius-1);
+    box-shadow: var(--box-shadow);
+    padding: 1.8rem;
+}
+
+main h1 {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+}
+
+.date {
+    margin-bottom: 1.8rem;
+}
+
+.date input[type="date"] {
+    border: 1px solid var(--color-info-light);
+    border-radius: var(--border-radius-2);
+    padding: 0.8rem;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.insights {
+    display: flex;
+    gap: 1.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.8rem;
+}
+
+.insights .patient-count, .insights .consultations, .insights .appointments {
+    background: var(--color-white);
+    border-radius: var(--border-radius-1);
+    padding: var(--card-padding);
+    box-shadow: var(--box-shadow);
+    flex: 1;
+}
+
+.insights .patient-count h1, .insights .consultations h1, .insights .appointments h1 {
+    font-size: 2rem;
+    margin-bottom: 0.4rem;
+}
+
+.insights .patient-count .progress, .insights .consultations .progress, .insights .appointments .progress {
+    position: relative;
+}
+
+.insights .patient-count .progress svg, .insights .consultations .progress svg, .insights .appointments .progress svg {
+    width: 72px;
+    height: 72px;
+    stroke-width: 5;
+    fill: none;
+    stroke: var(--color-info-light);
+}
+
+.insights .patient-count .progress .number, .insights .consultations .progress .number, .insights .appointments .progress .number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.4rem;
+    color: var(--color-dark);
+}
+
+.recent-updates {
+    margin-top: 2rem;
+}
+
+.recent-updates h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.recent-updates table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.recent-updates table thead {
+    background: var(--color-info-light);
+}
+
+.recent-updates table th, .recent-updates table td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-info-light);
+}
+
+.recent-updates a {
+    display: block;
+    text-align: right;
+    margin-top: 1rem;
+    color: var(--color-primary);
+}
+
+.right {
+    grid-area: right;
+    background: var(--color-white);
+    border-radius: var(--border-radius-1);
+    box-shadow: var(--box-shadow);
+    padding: 1.8rem;
+}
+
+.right .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-info-light);
+    padding-bottom: 1.8rem;
+}
+
+.right .top button {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: 0.8rem;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    font-size: 1.4rem;
+}
+
+.right .theme-toggler {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.right .theme-toggler span {
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.right .profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.right .profile .info {
+    font-size: 1rem;
+}
+
+.right .profile img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.right .recent-updates {
+    margin-top: 2rem;
+}
+
+.right .recent-updates .update {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-info-light);
+}
+
+.right .recent-updates .update .profile-photo img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.right .recent-updates .update .message {
+    font-size: 0.9rem;
+}
+
+.right .recent-updates .update small {
+    color: var(--color-info-dark);
+}

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PatientAuthController extends Controller
 {
@@ -28,7 +28,7 @@ class PatientAuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        Auth::login($patient);
+        Session::put('patient_id', $patient->id);
 
         return redirect('patient/dashboard');
     }
@@ -42,16 +42,23 @@ class PatientAuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        $patient = Patient::where('email', $credentials['email'])->first();
+
+        if ($patient && $credentials['password'] === $patient->password) {            Session::put('patient_id', $patient->id);
             return redirect()->intended('patient/dashboard');
         }
 
+        $request->session()->put('patient_id', $patient->id);
         return redirect('patient/login')->withErrors(['email' => 'Invalid credentials']);
     }
 
     public function logout()
     {
-        Auth::logout();
-        return redirect('/');
+        try {
+            $request->session()->forget('patient_id');
+            return redirect('/');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite lors de la déconnexion. Veuillez réessayer.']);
+        }
     }
 }

@@ -41,7 +41,7 @@
                             <h3>Consultations</h3>
                             <h1>{{ $consultationCount }}</h1>
                         </div>
-                    </div>
+                    </div>  
                     <small class="text-muted">Effectuées</small>
                 </div>
 
@@ -54,6 +54,28 @@
                         </div>
                     </div>
                     <small class="text-muted">En cours</small>
+                </div>
+
+                <div class="doctorCount">
+                    <span class="material-icons-sharp">medical_services</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Médecins</h3>
+                            <h1>{{ $doctorCount }}</h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Total</small>
+                </div>
+
+                <div class="doctorCount">
+                    <span class="material-icons-sharp">medical_services</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Médecins</h3>
+                            <h1>{{ $doctorCount }}</h1>
+                        </div>
+                    </div>
+                    <small class="text-muted">Total</small>
                 </div>
 
                 <div class="pressionp">

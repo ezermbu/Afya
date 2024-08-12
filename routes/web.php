@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\VitalSignController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PatientAuthController;
 use App\Http\Controllers\HospitalAuthController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\PatientReportController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AvailabilitySlotController;
@@ -37,7 +39,7 @@ Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('
 Route::post('admin/login', [AdminAuthController::class, 'login']);
 Route::get('admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
-Route::get('admin/hospitals', [HospitalController::class, 'index'])->name('admin.hospitals');;
+Route::get('admin/hospitals', [HospitalController::class, 'index'])->name('admin.hospitals.index');;
 Route::get('admin/hospitals/create', [HospitalController::class, 'create'])->name('admin.hospitals.create');
 Route::post('admin/hospitals/store', [HospitalController::class, 'store'])->name('admin.hospitals.store');
 
@@ -46,7 +48,12 @@ Route::put('admin/hospitals/update/{hospital}', [HospitalController::class, 'upd
 Route::delete('admin/hospitals/destroy/{hospital}', [HospitalController::class, 'destroy'])->name('admin.hospitals.destroy');
 
 Route::get('admin/dashboard', [AdminDashboardController::class, 'index']);
-Route::get('admin', [AdminDashboardController::class, 'index']);
+Route::get('admin/doctors', [DoctorController::class, 'indexAdmin'])->name('admin.doctors.index');
+Route::get('admin/doctors/{id}', [DoctorController::class, 'show'])->name('admin.doctors.show');
+Route::get('admin/patients/{id}', [PatientController::class, 'show'])->name('admin.patients.show');
+Route::get('admin/patients', [PatientController::class, 'indexAdmin'])->name('admin.patients.index');
+
+Route::get('admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
 
 
@@ -99,9 +106,10 @@ Route::get('patient/register', [PatientAuthController::class, 'showRegisterForm'
 Route::post('patient/register', [PatientAuthController::class, 'register'])->name('patient.register');;
 Route::get('patient/login', [PatientAuthController::class, 'showLoginForm'])->name('patient.showLoginForm');;
 Route::post('patient/login', [PatientAuthController::class, 'login'])->name('patient.login');;
-Route::post('patient/logout', [PatientAuthController::class, 'logout'])->name('patient.logout');
+Route::get('patient/logout', [PatientAuthController::class, 'logout'])->name('patient.logout');
 
 // Routes CRUD pour les patients
+Route::get('patient/dashboard', [PatientController::class, 'dashboard'])->name('patient.dashboard');
 Route::get('patients', [PatientController::class, 'index'])->name('patients.index');
 Route::get('patients/create', [PatientController::class, 'create'])->name('patients.create');
 Route::post('patients', [PatientController::class, 'store'])->name('patients.store');
@@ -114,23 +122,19 @@ Route::get('patient/hospitals', [HospitalController::class, 'index'])->name('pat
 Route::get('patient/subscribe', [SubscriptionController::class, 'showSubscriptionForm']);
 Route::post('patient/subscribe', [SubscriptionController::class, 'subscribe']);
 
-Route::post('vital-signs', [VitalSignController::class, 'store']);
+Route::post('patient/vital-signs', [VitalSignController::class, 'store']);
+
+
 
 Route::get('patient/appointments', [AppointmentController::class, 'index']);
 Route::get('patient/appointments/create', [AppointmentController::class, 'create']);
 Route::post('patient/appointments', [AppointmentController::class, 'store']);
 
-Route::get('patient/medical-record', function () {
-    return view('patient.medical_record');
-});
-
-Route::get('teleconsultation', function () {
-    return view('teleconsultation');
-});
-
+Route::get('patient/medical-record', [MedicalRecordController::class, 'index'])->name('patient.medical-record.index');
+Route::get('patient/teleconsultation', [TeleconsultationController::class, 'index'])->name('patient.teleconsultation.index');
 
 
 Route::get('teleconsultation', [TeleconsultationController::class, 'index']);
 Route::get('leave', [TeleconsultationController::class, 'leave']);
 
-
+Route::get('patient/settings', [PatientController::class, 'settings'])->name('patient.settings');

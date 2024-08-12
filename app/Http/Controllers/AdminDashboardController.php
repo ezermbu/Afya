@@ -14,15 +14,16 @@ class AdminDashboardController extends Controller
     public function index()
     {
         if (!session()->has('admin_id')) {
-            return redirect()->intended(route('admin.login'))->with('error', 'Veuillez vous connecter en tant qu\'administrateur.');        }
+            return redirect()->intended(route('admin.login'))->with('error', 'Veuillez vous connecter en tant qu\'administrateur.');       
+        }
 
         $admin = Admin::find(session('admin_id'));
         $hospitalCount = Hospital::count();
         $doctorCount = Doctor::count();
         $patientCount = Patient::count();
-        $todayAppointments = Appointment::whereDate('scheduled_at', today())->count();
+        $appointmentCount = Appointment::count();
 
-        return view('admin.dashboard', compact('admin', 'hospitalCount', 'doctorCount', 'patientCount', 'todayAppointments'));
+        return view('admin.dashboard', compact('admin', 'hospitalCount', 'doctorCount', 'patientCount', 'appointmentCount'));
     }
 
     public function getPatientsAndDoctors()

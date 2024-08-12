@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Hôpitaux</title>
+    <title>Dashboard Admin</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
@@ -12,16 +12,18 @@
     <style>
         main {
             padding: 20px;
+            /*background-color: #f4f6f9;*/
             border-radius: 4px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+           /* margin-left: 260px; /* Assuming your sidebar is 260px wide */
         }
-        
+
         main h1 {
             font-size: 24px;
             color: #333;
             margin-bottom: 20px;
         }
-        
+
         .date input[type="date"] {
             padding: 8px;
             border-radius: 5px;
@@ -31,17 +33,17 @@
             width: 100%;
             max-width: 250px;
         }
-        
+
         .insights {
             margin-top: 20px;
         }
-        
+
         .insights h1 {
             font-size: 20px;
             color: #555;
             margin-bottom: 15px;
         }
-        
+
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -50,31 +52,32 @@
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
         .table thead {
-            background-color: #f9f9f9;
+            background-color: #f9f9f9; /* Couleur plus douce pour le header */
             color: #333;
             text-align: left;
             font-size: 16px;
-            border-bottom: 2px solid #ddd;
+            border-bottom: 2px solid #ddd; /* Ajout d'une bordure subtile pour la séparation */
         }
-        
+
+
         .table th, .table td {
             padding: 12px 15px;
         }
-        
+
         .table tbody tr {
             border-bottom: 1px solid #eee;
         }
-        
+
         .table tbody tr:last-of-type {
             border-bottom: none;
         }
-        
+
         .table tbody tr:hover {
             background-color: #f1f1f1;
         }
-        
+
         .btn {
             padding: 6px 12px;
             border-radius: 4px;
@@ -83,14 +86,15 @@
             color: #fff;
             transition: background-color 0.3s ease;
         }
-        
+
         .btn-info {
             background-color: #17a2b8;
         }
-        
+
         .btn-info:hover {
             background-color: #138496;
         }
+
     </style>
 </head>
 <body>
@@ -102,18 +106,18 @@
                     <h2>Afya <span class="danger">Medical</span></h2>
                 </div>
             </div>
-            
+
             <div class="sidebar">
                 <hr>
-                <a href="{{ route('admin.dashboard') }}">
+                <a href="{{ route('admin.dashboard') }}" >
                     <span class="material-icons-sharp">monitor_heart</span>
                     <h3>Tableau de Bord</h3>
                 </a>
-                <a href="{{ route('admin.patients.index') }}">
+                <a href="{{ route('admin.patients.index') }}" class="active">
                     <span class="material-symbols-outlined">folder_shared</span>
                     <h3>Patients</h3>
                 </a>
-                <a href="{{ route('admin.hospitals.index') }}" class="active">
+                <a href="{{ route('admin.hospitals.index') }}">
                     <span class="material-symbols-outlined">emergency</span>
                     <h3>Hôpital</h3>
                 </a>
@@ -133,62 +137,44 @@
         </aside>
 
         <main>
-            <h1>Liste des Hôpitaux</h1>
+            <h1>Dashboard Admin</h1>
             <div class="date">
                 <input type="date">
             </div>
             <div class="insights">
-                <a href="{{ route('admin.hospitals.create') }}" class="btn btn-primary mb-3">Ajouter un hôpital</a>
-
-                @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                @if($hospitals->isEmpty())
-                    <div class="alert alert-info">
-                        Aucun hôpital n'est enregistré pour le moment.
-                    </div>
-                @else
-                    <table class="table">
-                        <thead>
+                <h1>Liste des patients</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($patients as $patient)
                             <tr>
-                                <th>Nom</th>
-                                <th>Adresse</th>
-                                <th>Téléphone</th>
-                                <th>Actions</th>
+                                <td>{{ $patient->id }}</td>
+                                <td>{{ $patient->name }}</td>
+                                <td>{{ $patient->email }}</td>
+                                <td>
+                                    <a href="{{ route('admin.patients.show', $patient->id) }}" class="btn btn-info btn-sm">Voir</a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($hospitals as $hospital)
-                                <tr>
-                                    <td>{{ $hospital->name }}</td>
-                                    <td>{{ $hospital->address }}</td>
-                                    <td>{{ $hospital->email }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.hospitals.edit', $hospital->id) }}" class="btn btn-info btn-sm">Modifier</a>
-                                        <form action="{{ route('admin.hospitals.destroy', $hospital->id) }}" method="POST" style="display: inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet hôpital ?')">Supprimer</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </main>
+
 
         <div class="right">
             <div class="profile">
                 <div class="info">
                     <h2>Dr. {{ $admin->name }}</h2>
                     <p>{{ $admin->name ?? 'Admin' }}</p>
-                    <small class="text-muted">{{ $admin->description ?? 'Administrateur du système de santé en ligne' }}</small>
-                </div>
+                    <small class="text-muted">{{ $admin->description ?? 'Administrateur du système de santé en ligne' }}</small>                </div>
                 <div class="profile-photo">
                     @if($admin->profile_photo)
                         <img src="{{ asset('storage/' . $admin->profile_photo) }}" alt="Photo de profil de {{ $admin->name }}" class="rounded-circle">

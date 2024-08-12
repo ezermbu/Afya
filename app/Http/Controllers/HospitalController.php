@@ -8,6 +8,7 @@ use App\Models\Patient;
 use App\Models\Appointment;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use APp\Models\Hospital_patient;
 
 class HospitalController extends Controller
 {
@@ -56,7 +57,7 @@ class HospitalController extends Controller
         $hospital = Hospital::find(session('hospital_id'));
         $hospitalCount = Hospital::count();
         $doctorCount = Doctor::count();
-        $patientCount = Patient::where('hospital_patient', $hospital->id)->count();
+        $patientCount = Hospital_patient::where('hospital_id', $hospital->id)->count();
         //$todayAppointments = Appointment::whereDate('scheduled_at', today())->where('hospital_id', $hospital->id)->count();
 
         $patients = Patient::where('hospital_id', $hospital->id)->get();
@@ -80,7 +81,8 @@ class HospitalController extends Controller
     public function edit($id)
     {
         $hospital = Hospital::findOrFail($id);
-        return view('admin.edit_hospital', compact('hospital'));
+        $admin = Admin::find(session('admin_id'));
+        return view('admin.edit_hospital', compact('hospital', 'admin'));
     }
 
     public function update(Request $request, $id)
