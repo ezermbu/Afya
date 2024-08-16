@@ -38,7 +38,7 @@
                     <span class="material-symbols-outlined">stethoscope</span>
                     <h3>Médecin</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('admin.settings') }}">
                     <span class="material-icons-sharp">settings</span>
                     <h3>Paramètres</h3>
                 </a>
@@ -57,11 +57,13 @@
             <div class="patient-profile">
                 <div class="patient-info">
                     <h2>{{ $patient->name }}</h2>
-                    <p>ID: {{ $patient->id }}</p>
-                    <p>Email: {{ $patient->email }}</p>
-                    <p>Date de naissance: {{ $patient->date_of_birth }}</p>
-                    <p>Téléphone: {{ $patient->phone }}</p>
-                    <p>Adresse: {{ $patient->address }}</p>
+                    <ul>
+                        <li><strong>ID:</strong> {{ $patient->id }}</li>
+                        <li><strong>Email:</strong> {{ $patient->email }}</li>
+                        <li><strong>Date de naissance:</strong> {{ $patient->date_of_birth }}</li>
+                        <li><strong>Téléphone:</strong> {{ $patient->phone }}</li>
+                        <li><strong>Adresse:</strong> {{ $patient->address }}</li>
+                    </ul>
                 </div>
                 <div class="patient-photo">
                     @if($patient->profile_photo)
@@ -75,35 +77,37 @@
             </div>
             <div class="patient-medical-info">
                 <h3>Informations Médicales</h3>
-                <p>Groupe sanguin: {{ $patient->blood_group }}</p>
-                <p>Allergies: {{ $patient->allergies ?? 'Aucune' }}</p>
-                <p>Maladies chroniques: {{ $patient->chronic_diseases ?? 'Aucune' }}</p>
+                <ul>
+                    <li><strong>Groupe sanguin:</strong> {{ $patient->blood_group }}</li>
+                    <li><strong>Allergies:</strong> {{ $patient->allergies ?? 'Aucune' }}</li>
+                    <li><strong>Maladies chroniques:</strong> {{ $patient->chronic_diseases ?? 'Aucune' }}</li>
+                </ul>
             </div>
             <div class="patient-appointments">
                 <h3>Rendez-vous</h3>
-                
+                <!-- Ajoutez ici la liste des rendez-vous -->
             </div>
         </main>
         
         <div class="right">
             <div class="profile">
-                <div class="info">
-                    <h2>{{ $admin->name }}</h2>
-                    <p>{{ $admin->name ?? 'Admin' }}</p>
-                    <small class="text-muted">{{ $admin->description ?? 'Administrateur du système de santé en ligne' }}</small>
-               </div>
                 <div class="profile-photo">
                     @if($admin->profile_photo)
-                        <img src="{{ asset('storage/' . $admin->profile_photo) }}" alt="Photo de profil de {{ $admin->name }}" class="rounded-circle">
+                        <img src="{{ asset('images/' . $admin->profile_photo) }}" alt="Photo de profil de {{ $admin->name }}">
                     @else
                         <div class="default-avatar">
                             <span class="material-icons-sharp">account_circle</span>
                         </div>
                     @endif
                 </div>
+                <div class="info">
+                    <h2>{{ $admin->name }}</h2>
+                    <p>{{ $admin->name ?? 'Admin' }}</p>
+                    <small class="text-muted">{{ $admin->description ?? 'Administrateur du système de santé en ligne' }}</small>
+                </div>
             </div>
             <div class="profile-actions">
-                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-sm">Modifier le profil</a>
+                <a href="{{ route('admin.settings') }}" class="btn-primary">Modifier le profil</a>
             </div>
             <hr class="profile-divider" style="border-top: 1px solid #ccc; margin: 15px 0;">
         </div>

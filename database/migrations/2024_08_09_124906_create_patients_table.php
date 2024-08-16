@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone')->nullable();
-            $table->string('profile_photo')->default('patient.png');
+            $table->string('profile_photo')->default('profile.png');
             $table->text('medical_history')->nullable();
             $table->string('blood_type')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();

@@ -19,7 +19,7 @@ class HospitalPatientSeeder extends Seeder
         $hospitals = Hospital::all();
 
         for ($i = 0; $i < 20; $i++) {
-            DB::table('hospital_patient')->insert([
+            DB::table('hospital_patients')->insert([
                 'patient_id' => $patients->random()->id,
                 'hospital_id' => $hospitals->random()->id,
                 'created_at' => now(),

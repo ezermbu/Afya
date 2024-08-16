@@ -235,7 +235,7 @@
                     <span class="material-symbols-outlined">stethoscope</span>
                     <h3>Médecin</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('admin.settings') }}">
                     <span class="material-icons-sharp">settings</span>
                     <h3>Paramètres</h3>
                 </a>
@@ -248,10 +248,6 @@
 
         <main>
             <h1>Liste des Docteurs</h1>
-            <a href="{{ route('admin.doctors.index') }}" class="add-doctor-btn">
-                <span class="material-icons-sharp">add</span>
-                <span class="btn-text">Ajouter un médecin</span>
-            </a>
             <div class="recent-orders">
                 <table>
                     <thead>
@@ -284,7 +280,7 @@
             <div class="profile">
                 <div class="profile-photo">
                     @if($admin->profile_photo)
-                        <img src="{{ asset('storage/' . $admin->profile_photo) }}" alt="Photo de profil de {{ $admin->name }}">
+                        <img src="{{ asset('images/' . $admin->profile_photo) }}" alt="Photo de profil de {{ $admin->name }}">
                     @else
                         <div class="default-avatar">
                             <span class="material-icons-sharp">account_circle</span>
@@ -298,7 +294,7 @@
                 </div>
             </div>
             <div class="profile-actions">
-                <a href="{{ route('admin.dashboard') }}" class="btn-primary">Modifier le profil</a>
+                <a href="{{ route('admin.settings') }}" class="btn-primary">Modifier le profil</a>
             </div>
         </div>
     </div>

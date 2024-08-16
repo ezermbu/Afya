@@ -54,6 +54,9 @@ Route::get('admin/patients/{id}', [PatientController::class, 'show'])->name('adm
 Route::get('admin/patients', [PatientController::class, 'indexAdmin'])->name('admin.patients.index');
 
 Route::get('admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('admin/settings', [AdminDashboardController::class, 'settings'])->name('admin.settings');
+Route::put('admin/settings', [AdminDashboardController::class, 'updateSettings'])->name('admin.settings.update');
+
 
 
 
@@ -102,10 +105,10 @@ Route::get('doctor/availability-slots', [AvailabilitySlotController::class, 'sto
 
 
 // route du patient
-Route::get('patient/register', [PatientAuthController::class, 'showRegisterForm']);
+Route::get('patient/register', [PatientAuthController::class, 'showLoginForm']);
 Route::post('patient/register', [PatientAuthController::class, 'register'])->name('patient.register');;
-Route::get('patient/login', [PatientAuthController::class, 'showLoginForm'])->name('patient.showLoginForm');;
-Route::post('patient/login', [PatientAuthController::class, 'login'])->name('patient.login');;
+Route::get('patient/login', [PatientAuthController::class, 'showLoginForm'])->name('patient.showLoginForm');
+Route::post('patient/login', [PatientAuthController::class, 'login'])->name('patient.login');
 Route::get('patient/logout', [PatientAuthController::class, 'logout'])->name('patient.logout');
 
 // Routes CRUD pour les patients

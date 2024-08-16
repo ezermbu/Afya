@@ -20,3 +20,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+
+<a href="{{ route('admin.doctors.index') }}" class="add-doctor-btn">
+<span class="material-icons-sharp">add</span>
+<span class="btn-text">Ajouter un médecin</span>
+</a>

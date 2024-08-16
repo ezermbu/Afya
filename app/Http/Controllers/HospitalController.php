@@ -8,7 +8,7 @@ use App\Models\Patient;
 use App\Models\Appointment;
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use APp\Models\Hospital_patient;
+use App\Models\Hospital_patient;
 
 class HospitalController extends Controller
 {
@@ -60,11 +60,16 @@ class HospitalController extends Controller
         $patientCount = Hospital_patient::where('hospital_id', $hospital->id)->count();
         //$todayAppointments = Appointment::whereDate('scheduled_at', today())->where('hospital_id', $hospital->id)->count();
 
-        $patients = Patient::where('hospital_id', $hospital->id)->get();
+        $patients = Hospital_patient::where('hospital_id', $hospital->id)->get();
         //$consultations = Appointment::where('hospital_id', $hospital->id)->get();
         /*$prescriptions = Prescription::whereHas('appointment', function($query) use ($hospital) {
             $query->where('hospital_id', $hospital->id);
         })->get();*/
+        $todayAppointments = "";//Appointment::whereDate('scheduled_at', today())->where('hospital_id', $hospital->id)->count();
+        $consultations = "";//Appointment::where('hospital_id', $hospital->id)->get();
+        $prescriptions ="";//
+
+
 
         return view('hospital.dashboard', compact('hospital', 'hospitalCount', 'doctorCount', 'patientCount', 'todayAppointments', 'patients', 'consultations', 'prescriptions'));
     }

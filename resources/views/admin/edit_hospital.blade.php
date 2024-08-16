@@ -112,7 +112,7 @@
                     <span class="material-symbols-outlined">stethoscope</span>
                     <h3>Médecin</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('admin.settings') }}">
                     <span class="material-icons-sharp">settings</span>
                     <h3>Paramètres</h3>
                 </a>

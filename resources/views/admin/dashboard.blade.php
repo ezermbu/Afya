@@ -69,7 +69,7 @@
                     <span class="material-symbols-outlined">stethoscope</span>
                     <h3>Médecin</h3>
                 </a>
-                <a href="#">
+                <a href="{{ route('admin.settings') }}">
                     <span class="material-icons-sharp">settings</span>
                     <h3>Paramètres</h3>
                 </a>
@@ -87,6 +87,7 @@
                 <span class="btn-text">Ajouter un hôpital</span>
             </a>
 
+            <br><br><br>
            <div class="insights">
                 <div class="patient-count">
                     <span class="material-icons-sharp">people</span>
@@ -145,22 +146,22 @@
 
         <div class="right">
             <div class="profile">
-                <div class="info">
-                    <h2>{{ $admin->name }}</h2>
-                    <p>{{ $admin->name ?? 'Admin' }}</p>
-                    <small class="text-muted">{{ $admin->description ?? 'Administrateur du système de santé en ligne' }}</small>                </div>
                 <div class="profile-photo">
                     @if($admin->profile_photo)
-                        <img src="{{ asset('storage/' . $admin->profile_photo) }}" alt="Photo de profil de {{ $admin->name }}" class="rounded-circle">
+                        <img src="{{ asset('images/' . $admin->profile_photo) }}" alt="Photo de profil de {{ $admin->name }}">
                     @else
                         <div class="default-avatar">
                             <span class="material-icons-sharp">account_circle</span>
                         </div>
                     @endif
                 </div>
+                <div class="info">
+                    <h2>{{ $admin->name }}</h2>
+                    <small class="text-muted">{{ $admin->description ?? 'Administrateur du système de santé en ligne' }}</small>
+                </div>
             </div>
             <div class="profile-actions">
-                <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-sm">Modifier le profil</a>
+                <a href="{{ route('admin.settings') }}" class="btn-primary">Modifier le profil</a>
             </div>
             <hr class="profile-divider" style="border-top: 1px solid #ccc; margin: 15px 0;">        
         </div>

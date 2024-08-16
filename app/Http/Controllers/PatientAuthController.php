@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Patient;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class PatientAuthController extends Controller
 {
@@ -25,12 +26,12 @@ class PatientAuthController extends Controller
         $patient = Patient::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
         ]);
 
         Session::put('patient_id', $patient->id);
 
-        return redirect('patient/dashboard');
+        return redirect()->route('patient.dashboard')->with('patient', $patient);
     }
 
     public function showLoginForm()
@@ -40,19 +41,29 @@ class PatientAuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        try {
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-        $patient = Patient::where('email', $credentials['email'])->first();
+            $patient = Patient::where('email', $credentials['email'])->first();
 
-        if ($patient && $credentials['password'] === $patient->password) {            Session::put('patient_id', $patient->id);
+            if (!$patient || $credentials['password'] !== $patient->password) {
+                throw ValidationException::withMessages([
+                    'email' => ['Les informations d\'identification fournies sont incorrectes.'],
+                ]);
+            }
+
+            $request->session()->put('patient_id', $patient->id);
             return redirect()->intended('patient/dashboard');
+        } catch (ValidationException $e) {
+            return redirect('patient/login')->withErrors($e->errors());
+        } catch (\Exception $e) {
+            return redirect('patient/login')->withErrors(['error' => 'Une erreur s\'est produite. Veuillez réessayer.']);
         }
-
-        $request->session()->put('patient_id', $patient->id);
-        return redirect('patient/login')->withErrors(['email' => 'Invalid credentials']);
-    }
-
-    public function logout()
+        }
+    public function logout(Request $request)
     {
         try {
             $request->session()->forget('patient_id');

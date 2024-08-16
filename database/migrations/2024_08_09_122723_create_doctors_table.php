@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('specialty');
             $table->string('email')->unique();
-            $table->string('profile_photo')->default('doctor.png');
+            $table->string('profile_photo')->default('profile.png');
             $table->string('password');
             $table->timestamps();
 
